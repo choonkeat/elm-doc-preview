@@ -169,6 +169,10 @@ type Msg
 {-| -}
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
+    let
+        _ =
+            Debug.log "update" msg
+    in
     case msg of
         QueryChanged query ->
             ( { model | query = query }

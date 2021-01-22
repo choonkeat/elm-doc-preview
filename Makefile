@@ -14,7 +14,7 @@ $(doc_server): lib/elm-doc-server.ts
 	npx tsc
 
 elm_js:
-	npx elm make --output=$(elm_js) --optimize $(main)
+	npx elm make --output=$(elm_js) $(main)
 
 $(css): $(css_files)
 	cat $^ | npx csso -o $@
@@ -27,3 +27,6 @@ clean:
 
 publish: all
 	npm publish
+
+watch:
+	while fswatch --one-event --recursive .; do date; make all; ps -ef | grep node | grep cli.js | grep -v grep | while read uid pid others; do kill $pid; done; sleep 2; done
