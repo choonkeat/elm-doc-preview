@@ -101,7 +101,7 @@ view model =
         , Skeleton.projectSegment model.author model.project
         ]
     , warning = Skeleton.NoProblems
-    , attrs = [ class "pkg-overview" ]
+    , attrs = []
     , kids =
         case model.releases of
             Failure ->
@@ -113,11 +113,13 @@ view model =
                 ]
 
             Success (OneOrMore r rs) ->
-                [ h1 [] [ text "Cached Versions" ]
-                , p [] <|
-                    viewReleases model.author model.project <|
-                        List.map .version
-                            (List.sortWith (\a b -> V.compare a.version b.version) (r :: rs))
+                [ div [ class "pkg-overview" ]
+                    [ h1 [] [ text "Cached Versions" ]
+                    , p [] <|
+                        viewReleases model.author model.project <|
+                            List.map .version
+                                (List.sortWith (\a b -> V.compare a.version b.version) (r :: rs))
+                    ]
                 ]
     }
 
